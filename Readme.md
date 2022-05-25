@@ -32,6 +32,6 @@ Language: Html, Javascript.
 
 License: Apache 2.0
 
-请注意如果需要图片的版权请联系原作者。
+请注意如果需要图片的版权请联系我。
 
-Please notice if you need the copyrights of images, please contact the original author.
+Please notice if you need the copyrights of images (to develop sth, etc.), please contact me before using.
