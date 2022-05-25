@@ -1,4 +1,4 @@
-# 斗兽棋（Animal Chess）
+# Animal Chess（斗兽棋）
 
 某次作业的遗留产物，第二天我就想到可以传到git上水star。
 
