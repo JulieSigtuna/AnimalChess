@@ -1,37 +1,41 @@
-# Animal Chess（斗兽棋）
+# Animal Chess
 
-某次作业的遗留产物，第二天我就想到可以传到git上水star。
+**English** | [中文](README.zh-CN.md) | [Nederlands](README.nl.md)
 
-Remnants of one homework, I think that I could get some stars, so I uploaded it here.
+A leftover from one of my homework assignments. The next day, I suddenly realized I could upload it to GitHub and maybe farm a few stars, so here it is.
 
-由于我又懒又菜，没拆分代码，写的也很烂，但是还是能跑起来的。
+Because I was both lazy and very much a beginner at the time, I did not properly split the code into separate files, and the code style is not exactly beautiful either. But hey, it runs.
 
-Being lazy and newbie, I did not even divide the code into several files. In addition to poor style, but it still function.
+## Implemented
 
-实现:图片显示，图片移动，吃子，胜利。
+- Displaying the Animal Chess pieces
+- Moving pieces
+- Capturing pieces
+- Win detection
 
-Implementation: Displaying chess, moving, eating, winning.
+## Not implemented, but possible
 
-未实现但可以实现:河流
+- Rivers
 
-Not yet implemented: River.
+## Not implemented, and probably not by me
 
-未实现且我个人不可实现:较好的设置背景(因为我用了canvas的擦除，除非我在body中插入图片不然背景会很难看，我又不会图层就没话说了)
+- A better-looking background
 
-Not possibly implemented: better background (since I used canvas' erasing, it will make the background bad looking and I do not excel at layers).
+I used canvas erasing when moving the pieces, which makes a proper background rather awkward unless I put the image somewhere outside the canvas. I did not know how to work with layers at the time, so... that was basically the end of that idea.
 
-适合人群:需要做一个简易网页斗兽棋的人，需要参考斗兽棋逻辑的人，javascript初心者。
+## Who might find this useful?
 
-Suitable people: the one who needs to make a simple animal chess, who needs to refer to the logic of Animal chess's implementation, javascript beginner.
+- Someone who needs a very simple web version of Animal Chess
+- Someone who wants to look at an implementation of basic Animal Chess logic
+- JavaScript beginners
 
-实现语言:html,Javascript。
+## Languages
 
-Language: Html, Javascript.
+- HTML
+- JavaScript
 
-协议:Apache 2.0
+## License
 
-License: Apache 2.0
+Apache License 2.0.
 
-请注意如果需要图片的版权请联系我。
-
-Please notice if you need the copyrights of images (to develop sth, etc.), please contact me before using.
+Please contact me before reusing the images, especially if you want to use them in another project.
