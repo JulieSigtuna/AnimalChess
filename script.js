@@ -22,12 +22,7 @@ function rule(x,y)
         }
     }
     if(xid==yid)return 1;
-    if(xid>=2&&yid>=2)
-    {
-        if(xid>=yid)return 1;
-        else return -1;
-    }
-    else if(xid==1&&yid==8)
+    if(xid==1&&yid==8)
     {
         return 1;
     }
@@ -35,7 +30,10 @@ function rule(x,y)
     {
         return -1;
     }
-    else if(yid==0)return 1;
+    else if(xid>=yid)
+    {
+        return 1;
+    }
     else return -1;
 }
 function drawLine()
