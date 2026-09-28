@@ -75,25 +75,8 @@ rt=new Image();bt=new Image();
 rc=new Image();bc=new Image();
 rd=new Image();bd=new Image();
 rcave=new Image();bcave=new Image();
-re.src="images/re.png";
-rl.src="images/rl.png";
-rw.src="images/rw.png";
-rp.src="images/rp.png";
-rm.src="images/rm.png";
-rt.src="images/rt.png";
-rc.src="images/rc.png";
-rd.src="images/rd.png";
-rcave.src="images/rcave.png";
-be.src="images/be.png";
-bl.src="images/bl.png";
-bw.src="images/bw.png";
-bp.src="images/bp.png";
-bm.src="images/bm.png";
-bt.src="images/bt.png";
-bc.src="images/bc.png";
-bd.src="images/bd.png";
-bcave.src="images/bcave.png";
-bcave.onload=function()
+var imgload=0;
+function drawchess()
 {
     context.drawImage(rt,15,15,50,50);
     context.drawImage(rl,15,315,50,50);
@@ -114,7 +97,63 @@ bcave.onload=function()
     context.drawImage(bt,415,315,50,50);
     context.drawImage(bcave,415,165,50,50);
 }
-var newimg=new Image();
+function imgloaded()
+{
+    imgload++;
+    if(imgload==18)drawchess();
+}
+re.onload=imgloaded;be.onload=imgloaded;
+rl.onload=imgloaded;bl.onload=imgloaded;
+rw.onload=imgloaded;bw.onload=imgloaded;
+rp.onload=imgloaded;bp.onload=imgloaded;
+rm.onload=imgloaded;bm.onload=imgloaded;
+rt.onload=imgloaded;bt.onload=imgloaded;
+rc.onload=imgloaded;bc.onload=imgloaded;
+rd.onload=imgloaded;bd.onload=imgloaded;
+rcave.onload=imgloaded;bcave.onload=imgloaded;
+re.src="images/re.png";
+rl.src="images/rl.png";
+rw.src="images/rw.png";
+rp.src="images/rp.png";
+rm.src="images/rm.png";
+rt.src="images/rt.png";
+rc.src="images/rc.png";
+rd.src="images/rd.png";
+rcave.src="images/rcave.png";
+be.src="images/be.png";
+bl.src="images/bl.png";
+bw.src="images/bw.png";
+bp.src="images/bp.png";
+bm.src="images/bm.png";
+bt.src="images/bt.png";
+bc.src="images/bc.png";
+bd.src="images/bd.png";
+bcave.src="images/bcave.png";
+function getimg(x,belong)
+{
+    if(belong==1)
+    {
+        if(x=='e')return re;
+        else if(x=='l')return rl;
+        else if(x=='w')return rw;
+        else if(x=='p')return rp;
+        else if(x=='m')return rm;
+        else if(x=='t')return rt;
+        else if(x=='c')return rc;
+        else if(x=='d')return rd;
+    }
+    else if(belong==2)
+    {
+        if(x=='e')return be;
+        else if(x=='l')return bl;
+        else if(x=='w')return bw;
+        else if(x=='p')return bp;
+        else if(x=='m')return bm;
+        else if(x=='t')return bt;
+        else if(x=='c')return bc;
+        else if(x=='d')return bd;
+    }
+}
 chessboard[1][1]=chessboard[9][7]='t';
 chessboard[1][7]=chessboard[9][1]='l';
 chessboard[2][2]=chessboard[8][6]='c';
@@ -146,12 +185,13 @@ function poscheck(xid,yid)
     else return 1;
 }
 var canvas=document.getElementById('chess');
-var bbox=canvas.getBoundingClientRect();
 chess.onclick=function(e)
 {
     if(status==-1)return;
-    var x=e.clientX-bbox.left*(canvas.width/bbox.width);
-    var y=e.clientY-bbox.top*(canvas.height/bbox.height);
+    if(imgload<18)return;
+    var bbox=canvas.getBoundingClientRect();
+    var x=(e.clientX-bbox.left)*(canvas.width/bbox.width);
+    var y=(e.clientY-bbox.top)*(canvas.height/bbox.height);
     var xid=Math.floor((x-15)/50)+1;
     var yid=Math.floor((y-15)/50)+1;
     if(xid>9||xid<1||yid>7||yid<1)return;
@@ -172,9 +212,7 @@ chess.onclick=function(e)
         if(ablemove(nowx,nowy,xid,yid)==1)
         {
             status=1-status;
-            newimg.src="images/";
-            if(me==1)newimg.src=newimg.src+"r"+chessboard[nowx][nowy]+".png";
-            else if(me==2)newimg.src=newimg.src+"b"+chessboard[nowx][nowy]+".png";
+            var newimg=getimg(chessboard[nowx][nowy],me);
             if(me==1&&xid==9&&yid==4)
             {
                 alert("Red Wins!\n");
@@ -187,12 +225,9 @@ chess.onclick=function(e)
             }
             chessboard[xid][yid]=chessboard[nowx][nowy];chessboard[nowx][nowy]="0";
             belongboard[xid][yid]=belongboard[nowx][nowy];belongboard[nowx][nowy]="0";
-            newimg.onload=function()
-            {
-                context.clearRect((xid-1)*50+20,(yid-1)*50+20,35,35);
-                context.clearRect((nowx-1)*50+20,(nowy-1)*50+20,35,35);
-                context.drawImage(newimg,(xid-1)*50+15,(yid-1)*50+15,50,50);
-            }
+            context.clearRect((xid-1)*50+20,(yid-1)*50+20,35,35);
+            context.clearRect((nowx-1)*50+20,(nowy-1)*50+20,35,35);
+            context.drawImage(newimg,(xid-1)*50+15,(yid-1)*50+15,50,50);
         }
         else 
         {
