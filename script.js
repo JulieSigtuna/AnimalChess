@@ -126,6 +126,10 @@ chessboard[3][7]=chessboard[7][1]='m';
 belongboard[1][1]=belongboard[1][7]=belongboard[2][2]=belongboard[2][6]=belongboard[3][1]=belongboard[3][3]=belongboard[3][5]=belongboard[3][7]=1;
 belongboard[9][7]=belongboard[9][1]=belongboard[8][6]=belongboard[8][2]=belongboard[7][7]=belongboard[7][5]=belongboard[7][3]=belongboard[7][1]=2;
 var status=1,nowx=0,nowy=0,me=1;
+function restart()
+{
+    location.reload();
+}
 function abs(x)
 {
     if(x>0)return x;
@@ -145,6 +149,7 @@ var canvas=document.getElementById('chess');
 var bbox=canvas.getBoundingClientRect();
 chess.onclick=function(e)
 {
+    if(status==-1)return;
     var x=e.clientX-bbox.left*(canvas.width/bbox.width);
     var y=e.clientY-bbox.top*(canvas.height/bbox.height);
     var xid=Math.floor((x-15)/50)+1;
@@ -194,7 +199,10 @@ chess.onclick=function(e)
             status=1-status;
             return;
         }
-        if(me==1)me=2;
-        else if(me==2)me=1;
+        if(status!=-1)
+        {
+            if(me==1)me=2;
+            else if(me==2)me=1;
+        }
     }
 }   
