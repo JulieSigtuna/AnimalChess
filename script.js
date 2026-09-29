@@ -75,7 +75,7 @@ rt=new Image();bt=new Image();
 rc=new Image();bc=new Image();
 rd=new Image();bd=new Image();
 rcave=new Image();bcave=new Image();
-var imgload=0;
+var imgload=0,imgfailed=0;
 function drawchess()
 {
     context.drawImage(rt,15,15,50,50);
@@ -100,7 +100,15 @@ function drawchess()
 function imgloaded()
 {
     imgload++;
-    if(imgload==18)drawchess();
+    if(imgload==18&&imgfailed==0)drawchess();
+}
+function imgerror()
+{
+    if(imgfailed==0)
+    {
+        imgfailed=1;
+        alert("Image Load Failed!\n"+this.src);
+    }
 }
 re.onload=imgloaded;be.onload=imgloaded;
 rl.onload=imgloaded;bl.onload=imgloaded;
@@ -111,6 +119,15 @@ rt.onload=imgloaded;bt.onload=imgloaded;
 rc.onload=imgloaded;bc.onload=imgloaded;
 rd.onload=imgloaded;bd.onload=imgloaded;
 rcave.onload=imgloaded;bcave.onload=imgloaded;
+re.onerror=imgerror;be.onerror=imgerror;
+rl.onerror=imgerror;bl.onerror=imgerror;
+rw.onerror=imgerror;bw.onerror=imgerror;
+rp.onerror=imgerror;bp.onerror=imgerror;
+rm.onerror=imgerror;bm.onerror=imgerror;
+rt.onerror=imgerror;bt.onerror=imgerror;
+rc.onerror=imgerror;bc.onerror=imgerror;
+rd.onerror=imgerror;bd.onerror=imgerror;
+rcave.onerror=imgerror;bcave.onerror=imgerror;
 re.src="images/re.png";
 rl.src="images/rl.png";
 rw.src="images/rw.png";
@@ -176,7 +193,9 @@ function abs(x)
 }
 function ablemove(xid,yid,xpos,ypos)
 {
-    if(rule(chessboard[xid][yid],chessboard[xpos][ypos])==1&&((abs(ypos-yid)==1&&xpos==xid)||(abs(xpos-xid)==1&&ypos==yid))&&(belongboard[xid][yid]!=belongboard[xpos][ypos]))return 1;
+    if(belongboard[xid][yid]==1&&xpos==1&&ypos==4)return 0;
+    else if(belongboard[xid][yid]==2&&xpos==9&&ypos==4)return 0;
+    else if(rule(chessboard[xid][yid],chessboard[xpos][ypos])==1&&((abs(ypos-yid)==1&&xpos==xid)||(abs(xpos-xid)==1&&ypos==yid))&&(belongboard[xid][yid]!=belongboard[xpos][ypos]))return 1;
     else return 0;
 }
 function poscheck(xid,yid)
@@ -188,6 +207,7 @@ var canvas=document.getElementById('chess');
 chess.onclick=function(e)
 {
     if(status==-1)return;
+    if(imgfailed==1)return;
     if(imgload<18)return;
     var bbox=canvas.getBoundingClientRect();
     var x=(e.clientX-bbox.left)*(canvas.width/bbox.width);
@@ -213,21 +233,21 @@ chess.onclick=function(e)
         {
             status=1-status;
             var newimg=getimg(chessboard[nowx][nowy],me);
-            if(me==1&&xid==9&&yid==4)
-            {
-                alert("Red Wins!\n");
-                status=-1;
-            }
-            else if(me==2&&xid==1&&yid==4)
-            {
-                alert("Blue Wins!\n");
-                status=-1;
-            }
             chessboard[xid][yid]=chessboard[nowx][nowy];chessboard[nowx][nowy]="0";
             belongboard[xid][yid]=belongboard[nowx][nowy];belongboard[nowx][nowy]="0";
             context.clearRect((xid-1)*50+20,(yid-1)*50+20,35,35);
             context.clearRect((nowx-1)*50+20,(nowy-1)*50+20,35,35);
             context.drawImage(newimg,(xid-1)*50+15,(yid-1)*50+15,50,50);
+            if(me==1&&xid==9&&yid==4)
+            {
+                status=-1;
+                setTimeout(function(){alert("Red Wins!\n");},0);
+            }
+            else if(me==2&&xid==1&&yid==4)
+            {
+                status=-1;
+                setTimeout(function(){alert("Blue Wins!\n");},0);
+            }
         }
         else 
         {
@@ -240,4 +260,4 @@ chess.onclick=function(e)
             else if(me==2)me=1;
         }
     }
-}   
+}
